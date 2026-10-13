@@ -68,3 +68,7 @@ dashboard/bun.lock
 # local caches and vendored checkouts (kept off the system drive)
 .cache/
 vendor-cache/
+# desktop shell
+desktop/node_modules/
+desktop/release/
+desktop/dist/

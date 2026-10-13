@@ -21,6 +21,9 @@
 
 ## 1. 快速开始（Windows）
 
+> 想用**桌面版**（你说过更喜欢桌面端）：先跑完下面的 setup，再双击
+> `E:\Astrb\desktopun.cmd`。细节见 §5.5 与 `desktop/README.md`。
+
 前置：`Python 3.12+`（仓库根目录 `.python-version` 已锁定 3.12，`uv` 会自动取用）、
 `uv`、以及可选的 `Node.js 20+ / pnpm`（只有要自己构建网页界面时才需要）。
 
@@ -169,28 +172,39 @@ QQ 没有"不登录就能收发消息"的合法通道，所以这里的"免密"�
 本仓库默认监听 `0.0.0.0:6199` 与 `0.0.0.0:6185`，如果只是本机使用，建议在配置里把
 `dashboard.host` / `ws_reverse_host` 改成 `127.0.0.1`。
 
-## 5.5 与 AstrBot Desktop（桌面端）合并
+## 5.5 桌面版（本仓库自带）
 
-桌面端内嵌自己的 core 运行时，数据目录默认 `C:\Users\<你>\.astrbot\`，插件放
-`\.astrbot\data\plugins\`。代码里 `get_astrbot_root()` 的第一优先级是环境变量 `ASTRBOT_ROOT`，
-**桌面端也服从它**，所以数据目录可以整体搬到 E 盘。按省事到彻底，三条路：
+`desktop/` 是一个 Electron 桌面壳：托盘常驻、自动拉起并监管本地内核、内核异常退出自动重启、
+窗口直接显示面板（含「角色扮演」页面）。它不代理也不改写请求，窗口访问的就是
+`http://127.0.0.1:<端口>`，所以聊天、插件、QQ 平台与浏览器里行为完全一致。
 
-1. **只要陪伴插件**（建议先做这步）：它是标准 AstrBot 插件，直接装进桌面端数据目录，不用动它的 core：
-   ```bat
-   set "ASTRBOT_ROOT=E:\AstrbotDesktop"
-   E:\Astrb\scripts\personal\install-companion.bat --root E:\AstrbotDesktop
-   ```
-   之后让桌面端在这个环境变量的下启动，它就把该目录当数据根（顺手解决 C 盘占用）。
-2. **陪伴插件 + 我们的角色卡/世界书都要在桌面端用**：桌面端跑它自带的 core，不会加载本仓库对
-   `astrbot/core`、`astrbot/dashboard` 的改动，所以「角色扮演」页面目前只有源码版有。
-   根治办法是把 RP 引擎改造成**自包含插件 + 插件自带 Pages 页面**（AstrBot ≥4.22 支持，
-   陪伴插件自己就是这么做的）：把 `astrbot/core/rp` 移进插件目录、`/api/rp` 改用插件注册的
-   web API、前端页面改写成插件 Page。这是结构性改造，你说一句我就接着做。
-3. **让桌面端直接跑这份 core**：桌面端是打包运行时（`ASTRBOT_DESKTOP_CLIENT=1`），会校验随包
-   core 与 WebUI 版本匹配，替换内部 core 属非官方改法、每次升级会被覆盖，不建议。
+```bat
+cd /d E:\Astrb\desktop
+run.cmd                      :: 首次会自动 npm install，然后开窗口
+build.cmd                    :: 打 NSIS 安装包，输出 desktop\release
+npm run smoke                :: 无界面自检（5 项，见 §7）
+```
 
-数据迁移：把桌面端 `\.astrbot\data\` 里的 `cmd_config.json`、`data_v4.db`、`config/`、`plugins/`
-复制到新的 `ASTRBOT_ROOT\data\` 再重启即可；面板密码与会话历史都跟着这两个文件走。
+* **与命令行版共用同一份数据**（`E:\Astrb\data`）：角色卡、世界书、人格、插件、QQ 配置都是同一套，
+  不存在两份数据要同步。代价是**同一时间只能跑一个内核**——用桌面版前先关掉 `start.bat` 的窗口，
+  否则会抢端口和配置文件（桌面版会自动挑空闲端口，但数据目录仍是一个）。
+* 刻意**不设** `ASTRBOT_DESKTOP_MANAGED=1`：那个模式会让内核拒用 `data/dist`，而角色扮演页面就装在
+  里面。代价是首次要在窗口里登录一次（用户名 `astrbot`，密码见 §1；忘了就
+  `uv run python main.py --reset-password`）。
+* 下载与缓存全部钉在 `E:\Astrb\.cache`（npm / electron / electron-builder）。注意 Electron 44 不再带
+  postinstall，二进制由 `desktop/scripts/ensure-electron.js` 负责拉取；@electron/get 只认
+  `electron_config_cache`，同样已在脚本里写死，不会落到 C 盘。
+* 更多细节与限制见 `desktop/README.md`。
+
+### 如果你另外装了官方 AstrBot Desktop
+
+官方桌面端内嵌自己的 core，数据默认在 `C:\Users\<你>\.astrbot\`，不会加载本仓库对
+`astrbot/core`、`astrbot/dashboard` 的改动。所以：
+
+* 只想在官方桌面端用**陪伴插件**：`install-companion.bat --root <桌面端数据根>` 即可；
+  配合 `set "ASTRBOT_ROOT=E:\AstrbotDesktop"` 还能把它的数据从 C 盘挪走。
+* 想在桌面端用**角色卡/世界书**：直接用上面的自带桌面版，不需要官方桌面端。
+* 数据互通靠复制：`cmd_config.json`、`data_v4.db`、`config/`、`plugins/`、`rp/` 几个目录对拷即可。
 
 ## 6. 为什么"所有功能 + 所有插件"能成立
 
@@ -209,7 +223,8 @@ QQ 没有"不登录就能收发消息"的合法通道，所以这里的"免密"�
 | `astrbot/builtin_stars/rp_engine/` | 内置星：管道钩子 + QQ 端指令 + 插件配置项 |
 | `astrbot/dashboard/services/rp_service.py`<br>`astrbot/dashboard/api/rp.py` | `/api/rp/*` 后端（受面板 JWT 保护） |
 | `dashboard/src/views/RPPage.vue` + `views/rp/*` | 角色扮演页面（概览/角色卡/世界书/导入/预览） |
-| `scripts/personal/` | setup / start / QQ 配置 / WebUI 安装脚本 |
+| `scripts/personal/` | setup / start / QQ 配置 / WebUI 安装 / 陪伴插件安装脚本 |
+| `desktop/` | Electron 桌面版：托盘、自动拉起内核、异常自动重启、启动页与自检 |
 | `tests/unit/test_rp_engine.py`<br>`tests/unit/test_rp_star.py` | 18 个新增测试（引擎 + 钩子集成） |
 
 插件配置：`配置文件 → 插件配置 → rp_engine`
@@ -291,3 +306,5 @@ uv run pytest tests/unit/test_rp_engine.py tests/unit/test_rp_star.py
 | 陪伴插件导入 | 以 `data/plugins` + `data/site-packages` 为路径导入其 `main.py` | 成功：113 处理器 / 21 个 LLM 请求钩子 / 22 个工具 |
 | 安装器 | `scripts\personal\install-companion.bat` | 233 个条目装入，依赖落到 `data\site-packages` |
 | 代码风格 | `uv run ruff check` / `ruff format --check` | 全部通过 |
+| 桌面版自检 | `cd desktop && npm run smoke` | **5/5 通过**（隔离数据根真实起内核：首页 200、`/api/rp` 未登录 401、OpenAPI 200、rp_engine 加载、无插件失败） |
+| 桌面版真机启动 | `cd desktop && npm start` | 启动页 → 后端就绪 → **界面已载入** `http://127.0.0.1:6185/#/`；修掉了一处管道输出下的 `UnicodeEncodeError(gbk)` |

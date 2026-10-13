@@ -1,0 +1,45 @@
+{
+  "name": "astrb-rp-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Astrb-RP 桌面端外壳：托盘常驻、自动拉起并监管本地 AstrBot 内核",
+  "author": "chenmoulaile",
+  "license": "AGPL-3.0-or-later",
+  "main": "src/main.js",
+  "scripts": {
+    "ensure": "node scripts/ensure-electron.js",
+    "prestart": "node scripts/ensure-electron.js",
+    "start": "electron .",
+    "smoke": "node scripts/smoke.js",
+    "icon": "python scripts/make_icon.py",
+    "dist": "node scripts/ensure-electron.js && electron-builder --win --dir",
+    "installer": "node scripts/ensure-electron.js && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "app.astrb.rp.desktop",
+    "productName": "Astrb-RP",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "dir",
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Astrb-RP"
+    }
+  }
+}

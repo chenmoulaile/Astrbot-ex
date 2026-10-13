@@ -53,5 +53,6 @@
     "normal": "Normal Config",
     "system": "System Config"
   },
-  "pluginWebui": "Plugin Pages"
+  "pluginWebui": "Plugin Pages",
+  "rp": "Roleplay"
 }

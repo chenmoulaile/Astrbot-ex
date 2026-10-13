@@ -1,0 +1,32 @@
+{
+  "enable": {
+    "description": "总开关。关闭后不再注入世界书，角色卡仍可作为普通人格使用。",
+    "type": "bool",
+    "default": true
+  },
+  "include_card_name": {
+    "description": "扫描文本中附加当前角色名，让以角色名作关键词的设定条目稳定触发。",
+    "type": "bool",
+    "default": true
+  },
+  "global_token_cap": {
+    "description": "单次请求世界书注入的总 token 上限（估算值），0 表示不限制。",
+    "type": "int",
+    "default": 4000
+  },
+  "apply_without_card": {
+    "description": "未绑定角色卡时，也应用标记为「全局」的世界书。",
+    "type": "bool",
+    "default": true
+  },
+  "trace_in_log": {
+    "description": "每次注入后在日志打印命中的世界书条目，便于调试关键词。",
+    "type": "bool",
+    "default": false
+  },
+  "default_corpus_path": {
+    "description": "/导入 不带参数时使用的语料目录，例如 E:\\SublimeTextzip\\Prompt。",
+    "type": "text",
+    "default": "E:\\SublimeTextzip\\Prompt"
+  }
+}

@@ -34,6 +34,7 @@ import zhCNKnowledgeBaseIndex from './locales/zh-CN/features/knowledge-base/inde
 import zhCNKnowledgeBaseDetail from './locales/zh-CN/features/knowledge-base/detail.json';
 import zhCNKnowledgeBaseDocument from './locales/zh-CN/features/knowledge-base/document.json';
 import zhCNPersona from './locales/zh-CN/features/persona.json';
+import zhCNRp from './locales/zh-CN/features/rp.json';
 import zhCNCommand from './locales/zh-CN/features/command.json';
 import zhCNSubagent from './locales/zh-CN/features/subagent.json';
 import zhCNWelcome from './locales/zh-CN/features/welcome.json';
@@ -75,6 +76,7 @@ import enUSKnowledgeBaseIndex from './locales/en-US/features/knowledge-base/inde
 import enUSKnowledgeBaseDetail from './locales/en-US/features/knowledge-base/detail.json';
 import enUSKnowledgeBaseDocument from './locales/en-US/features/knowledge-base/document.json';
 import enUSPersona from './locales/en-US/features/persona.json';
+import enUSRp from './locales/en-US/features/rp.json';
 import enUSCommand from './locales/en-US/features/command.json';
 import enUSSubagent from './locales/en-US/features/subagent.json';
 import enUSWelcome from './locales/en-US/features/welcome.json';
@@ -116,6 +118,7 @@ import ruRUKnowledgeBaseIndex from './locales/ru-RU/features/knowledge-base/inde
 import ruRUKnowledgeBaseDetail from './locales/ru-RU/features/knowledge-base/detail.json';
 import ruRUKnowledgeBaseDocument from './locales/ru-RU/features/knowledge-base/document.json';
 import ruRUPersona from './locales/ru-RU/features/persona.json';
+import ruRURp from './locales/ru-RU/features/rp.json';
 import ruRUCommand from './locales/ru-RU/features/command.json';
 import ruRUSubagent from './locales/ru-RU/features/subagent.json';
 import ruRUWelcome from './locales/ru-RU/features/welcome.json';
@@ -157,6 +160,7 @@ import jaJPKnowledgeBaseIndex from './locales/ja-JP/features/knowledge-base/inde
 import jaJPKnowledgeBaseDetail from './locales/ja-JP/features/knowledge-base/detail.json';
 import jaJPKnowledgeBaseDocument from './locales/ja-JP/features/knowledge-base/document.json';
 import jaJPPersona from './locales/ja-JP/features/persona.json';
+import jaJPRp from './locales/ja-JP/features/rp.json';
 import jaJPCommand from './locales/ja-JP/features/command.json';
 import jaJPSubagent from './locales/ja-JP/features/subagent.json';
 import jaJPWelcome from './locales/ja-JP/features/welcome.json';
@@ -206,6 +210,7 @@ export const translations = {
         document: zhCNKnowledgeBaseDocument
       },
       persona: zhCNPersona,
+      rp: zhCNRp,
       command: zhCNCommand,
       subagent: zhCNSubagent,
       welcome: zhCNWelcome
@@ -255,6 +260,7 @@ export const translations = {
         document: enUSKnowledgeBaseDocument
       },
       persona: enUSPersona,
+      rp: enUSRp,
       command: enUSCommand,
       subagent: enUSSubagent,
       welcome: enUSWelcome
@@ -304,6 +310,7 @@ export const translations = {
         document: ruRUKnowledgeBaseDocument
       },
       persona: ruRUPersona,
+      rp: ruRURp,
       command: ruRUCommand,
       subagent: ruRUSubagent,
       welcome: ruRUWelcome
@@ -353,6 +360,7 @@ export const translations = {
         document: jaJPKnowledgeBaseDocument
       },
       persona: jaJPPersona,
+      rp: jaJPRp,
       command: jaJPCommand,
       subagent: jaJPSubagent,
       welcome: jaJPWelcome

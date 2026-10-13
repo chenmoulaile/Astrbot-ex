@@ -57,6 +57,11 @@ const sidebarItem: menu[] = [
     to: '/persona'
   },
   {
+    title: 'core.navigation.rp',
+    icon: 'mdi-drama-masks',
+    to: '/rp'
+  },
+  {
     title: 'core.navigation.data',
     icon: 'mdi-database',
     to: '/data'

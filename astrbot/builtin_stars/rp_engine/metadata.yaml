@@ -1,0 +1,5 @@
+name: rp_engine
+desc: 角色卡与世界书引擎：把角色扮演提示词、关键词世界书和语料导入接到对话管道。
+short_desc: 角色扮演 · 角色卡 / 世界书 / 语料导入
+author: Astrb-RP
+version: 1.0.0

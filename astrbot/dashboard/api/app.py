@@ -36,6 +36,7 @@ from astrbot.dashboard.services.persona_service import PersonaService
 from astrbot.dashboard.services.platform_service import PlatformService
 from astrbot.dashboard.services.plugin_page_service import PluginPageService
 from astrbot.dashboard.services.plugin_service import PluginService
+from astrbot.dashboard.services.rp_service import RPService
 from astrbot.dashboard.services.session_management_service import (
     SessionManagementService,
 )
@@ -69,6 +70,7 @@ from .platform import legacy_router as legacy_platform_router
 from .plugins import legacy_router as legacy_plugins_router
 from .providers import legacy_router as legacy_providers_router
 from .router import API_V1_PREFIX, build_api_router
+from .rp import legacy_router as legacy_rp_router
 from .sessions import legacy_router as legacy_sessions_router
 from .skills import legacy_router as legacy_skills_router
 from .static_files import router as static_files_router
@@ -121,6 +123,7 @@ def create_dashboard_asgi_app(
         platforms=PlatformService(core_lifecycle),
         providers=ProviderConfigService(core_lifecycle),
         personas=PersonaService(core_lifecycle),
+        rp=RPService(core_lifecycle),
         plugins=PluginService(core_lifecycle, core_lifecycle.plugin_manager),
         plugin_pages=PluginPageService(
             core_lifecycle.plugin_manager,
@@ -204,6 +207,7 @@ def create_dashboard_asgi_app(
     app.include_router(legacy_plugins_router)
     app.include_router(legacy_t2i_router)
     app.include_router(legacy_personas_router)
+    app.include_router(legacy_rp_router)
     app.include_router(legacy_updates_router)
     app.include_router(build_api_router())
     app.include_router(static_files_router)

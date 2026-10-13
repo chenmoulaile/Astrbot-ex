@@ -58,6 +58,7 @@ export class I18nLoader {
       { name: 'features/alkaid/knowledge-base', path: 'features/alkaid/knowledge-base.json' },
       { name: 'features/alkaid/memory', path: 'features/alkaid/memory.json' },
       { name: 'features/persona', path: 'features/persona.json' },
+      { name: 'features/rp', path: 'features/rp.json' },
       { name: 'features/welcome', path: 'features/welcome.json' },
       
       // 消息模块

@@ -163,6 +163,11 @@ const MainRoutes = {
       component: () => import('@/views/PersonaPage.vue')
     },
     {
+      name: 'RP',
+      path: '/rp',
+      component: () => import('@/views/RPPage.vue')
+    },
+    {
       name: 'Data',
       path: '/data',
       component: () => import('@/views/DataPage.vue'),

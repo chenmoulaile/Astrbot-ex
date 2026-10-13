@@ -65,3 +65,6 @@ GenieData/
 .worktrees/
 
 dashboard/bun.lock
+# local caches and vendored checkouts (kept off the system drive)
+.cache/
+vendor-cache/
